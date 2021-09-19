@@ -1,0 +1,41 @@
+import React from 'react'
+import { HiOutlineShoppingCart } from 'react-icons/hi'
+import { showHideCart } from '../../actions/cartActions'
+import { useDispatch, useSelector } from 'react-redux'
+
+
+function NavBar() {
+    const dispatch = useDispatch()
+    const cartItems = useSelector(state => state.cartItems)
+
+    let totalItems = 0
+
+    cartItems.map(item => (totalItems += item.quantity))
+
+    return (
+        <nav className="flex sticky top-0 z-50 justify-between bg-teal-500">
+            <div className="flex items-center flex-shrink-0 text-white px-4 my-5 mr-6">
+                <svg className="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
+                <span className="font-semibold text-xl tracking-tight">e-Com App</span>
+            </div>
+            <div className="flex mt-5">
+                <div className="">
+                    {/* <input type="text" placeholder="Search products..." className="flex px-2 h-8 lg:w-auto border-2 border-gray-400 rounded-xl"></input>
+                    <div className="p-1 px-2">
+                        <BiSearchAlt2 size={25}/>
+                    </div> */}
+                </div>
+                <button className="flex flex-row pb-2 pb px-4 mr-2 cursor-pointer" onClick={dispatch(showHideCart)}>
+                    <HiOutlineShoppingCart size={30}/>
+                    {
+                        cartItems.length > 0 && <div className="">
+                            <span className="bg-orange-300 rounded-full flex h-5 w-5 font-bold text-sm justify-center">{totalItems}</span>
+                        </div>
+                    }
+                </button>
+            </div>
+      </nav>
+    )
+}
+
+export default NavBar
