@@ -1,4 +1,4 @@
-import { FETCH_PRODUCTS } from '../ProductActionTypes/'
+import { FETCH_PRODUCTS } from '../actionTypes/ProductActionTypes'
 
 const initialState = {
     products: []
@@ -10,7 +10,6 @@ const fetchProductReducer = (state = initialState, action) => {
             return {
                 products: action.payload
             };
-    
         default:
             return state;
     }
