@@ -4,13 +4,13 @@ import { showHideCart, clearCart } from '../../actions/cartActions'
 import { useSelector, useDispatch } from 'react-redux'
 
 function Checkout() {
-    const cartItems = useSelector(state => state.cartItems)
+    const cartItems = useSelector(state => state.cart.cartItems)
     const dispatch = useDispatch()
     let total = 0
 
     function handleContinue() {
-        dispatch(clearCart)
-        dispatch(showHideCart)
+        dispatch(clearCart())
+        dispatch(showHideCart())
     }
 
     return (

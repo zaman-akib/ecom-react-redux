@@ -6,11 +6,15 @@ import { useDispatch, useSelector } from 'react-redux'
 
 function NavBar() {
     const dispatch = useDispatch()
-    const cartItems = useSelector(state => state.cartItems)
+    const cartItems = useSelector(state => state.cart.cartItems)
 
     let totalItems = 0
 
     cartItems.map(item => (totalItems += item.quantity))
+
+    function handleShowHideCart() {
+        dispatch(showHideCart())
+    }
 
     return (
         <nav className="flex sticky top-0 z-50 justify-between bg-teal-500">
@@ -25,7 +29,8 @@ function NavBar() {
                         <BiSearchAlt2 size={25}/>
                     </div> */}
                 </div>
-                <button className="flex flex-row pb-2 pb px-4 mr-2 cursor-pointer" onClick={dispatch(showHideCart)}>
+                <button className="flex flex-row pb-2 pb px-4 mr-2 cursor-pointer" 
+                onClick={handleShowHideCart}>
                     <HiOutlineShoppingCart size={30}/>
                     {
                         cartItems.length > 0 && <div className="">

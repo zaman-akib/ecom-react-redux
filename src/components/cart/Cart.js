@@ -8,13 +8,22 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export default function Cart() {
   const dispatch = useDispatch()
-  const cartItems = useSelector(state => state.cartItems)
-  const showCart = useSelector(state => state.showCart)
+  const cartItems = useSelector(state => state.cart.cartItems)
+  const showCart = useSelector(state => state.cart.showCart)
+  
   let total = 0
+
+  function handleShowHideCart() {
+    dispatch(showHideCart())
+  }
+
+  function handleClearCart() {
+    dispatch(clearCart())
+  }
 
   return (
     <Transition.Root show={showCart} as={Fragment} className="sticky top-0 z-50">
-      <Dialog as="div" className="absolute inset-0 overflow-hidden" onClose={dispatch(showHideCart)}>
+      <Dialog as="div" className="absolute inset-0 overflow-hidden" onClose={handleShowHideCart}>
         <div className="absolute inset-0 overflow-hidden">
           <Transition.Child
             as={Fragment}
@@ -47,7 +56,7 @@ export default function Cart() {
                         <button
                           type="button"
                           className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                          onClick={dispatch(showHideCart)}
+                          onClick={handleShowHideCart}
                         >
                           <span className="sr-only">Close panel</span>
                           <XIcon className="h-6 w-6" aria-hidden="true" />
@@ -57,7 +66,7 @@ export default function Cart() {
 
                     {cartItems.length !== 0 && (
                         <button className="flex justify-center items-center py-2 w-24 mt-5 cursor-pointer border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-400 hover:bg-red-500"
-                        onClick={dispatch(clearCart)}>
+                        onClick={handleClearCart}>
                             Clear Cart
                         </button>
                     )}
@@ -93,7 +102,7 @@ export default function Cart() {
                           <button
                             type="button"
                             className="text-indigo-600 font-medium hover:text-indigo-500"
-                            onClick={dispatch(showHideCart)}
+                            onClick={handleShowHideCart}
                           >
                             Continue Shopping<span aria-hidden="true"> &rarr;</span>
                           </button>

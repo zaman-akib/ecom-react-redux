@@ -1,13 +1,16 @@
 import React from 'react';
-import GetProducts from '../../helper/fetchProducts'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../../actions/cartActions'
+import { FetchProducts } from '../../actions/productActions'
 
 
 function ProductCard() {
     const dispatch = useDispatch()
-    const products = GetProducts()
-    const cartItems = useSelector(state => state.cartItems)
+
+    dispatch(FetchProducts)
+
+    const products = useSelector(state => state.fetchedProducts.products)
+    const cartItems = useSelector(state => state.cart.cartItems)
 
 
     function handleAdd(product) {

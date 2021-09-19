@@ -16,14 +16,14 @@ export const showHideCart = () => {
 export const deleteFromCart = id => {
     return {
         type: ACTIONS.DELETE_FROM_CART,
-        payload: id
+        payload: id,
     }
 }
 
 export const updateQuantity = (id, value) => {
     return {
         type: ACTIONS.UPDATE_QUANTITY,
-        payload: {id, value}
+        payload: {id, value},
     }
 }
 
