@@ -2,6 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../../actions/cartActions'
 import { FetchProducts } from '../../actions/productActions'
+import { FiMinusSquare, FiPlusSquare } from 'react-icons/fi'
+import { deleteFromCart, updateQuantity } from '../../actions/cartActions'
 
 
 function ProductCard() {
@@ -12,15 +14,27 @@ function ProductCard() {
     const products = useSelector(state => state.fetchedProducts.products)
     const cartItems = useSelector(state => state.cart.cartItems)
 
-
     function handleAdd(product) {
-        if(!cartItems.includes(product)) {
+        if(!isExistInCart(product.id)) {
             product.quantity = 1
             dispatch(addToCart(product))
         }
         else {
             alert('Already added in cart')
         }
+    }
+
+    function isExistInCart(id) {
+        return cartItems.find(item => item.id === id)
+    }
+
+    function getQuantity(id) {
+        const item = cartItems.find(item => item.id === id)
+        return item.quantity
+    }
+
+    function handleDelete(id) {
+        dispatch(deleteFromCart(id))
     }
 
     return (
@@ -37,12 +51,23 @@ function ProductCard() {
                                         <div className="px-2 mx-auto">Price: $ {product.price}</div>
                                     </div>
                                 </div>
-                                <div className="flex justify-center items-center border-2 border-t-0 border-red-400 bg-teal-500 p-2 w-64 mt-0 mx-8 rounded-b-lg">
-                                    <button className="text-center bg-orange-300 w-full hover:bg-orange-400 rounded-lg mb-1 mx-8 p-2 font-semibold" 
-                                    onClick={() => handleAdd(product)}> 
-                                        Add to Cart
-                                    </button>
-                                </div>
+                                { isExistInCart(product.id) ? (
+                                    <div className="flex-1 flex justify-between text-sm border-2 border-t-0 border-red-400 bg-teal-500 p-2 w-64 mt-0 mx-8 rounded-b-lg">
+                                        <div className="flex flex-row items-center justify-around bg-orange-300 w-full rounded-lg mx-8 p-2 font-semibold">
+                                            <FiMinusSquare className="cursor-pointer" size={25} onClick={() => dispatch(updateQuantity(product.id, -1))}/>
+                                                {getQuantity(product.id) === 0 ? handleDelete(product.id) : (
+                                                    <div className="px-5 text-lg font-bold">{getQuantity(product.id)}</div>
+                                                )}
+                                            <FiPlusSquare size={25} className="cursor-pointer" onClick={() => dispatch(updateQuantity(product.id, 1))}/>
+                                        </div>
+                                    </div> ) : (
+                                    <div className="flex justify-center items-center border-2 border-t-0 border-red-400 bg-teal-500 p-2 w-64 mt-0 mx-8 rounded-b-lg">
+                                        <button className="text-center bg-orange-300 w-full hover:bg-orange-400 rounded-lg mb-1 mx-8 p-2 font-semibold" 
+                                        onClick={() => handleAdd(product)}> 
+                                            Add to Cart
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ))
                     ) : (
