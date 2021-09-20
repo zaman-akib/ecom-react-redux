@@ -1,13 +1,15 @@
 import { useEffect } from 'react'
 import axios from 'axios'
 import { FETCH_PRODUCTS } from '../actionTypes/ProductActionTypes'
+import { useSelector } from 'react-redux'
 
 export const FetchProducts = (dispatch) => {
+    const products = useSelector(state => state.fetchedProducts.products)
+
     useEffect(() => {
-        if(!localStorage.getItem('products')){
+        if(products.length === 0){
             const fetchData = async () => {
                 const res = await axios.get('https://fakestoreapi.com/products')
-                localStorage.setItem('products', JSON.stringify(res.data))
 
                 dispatch({
                     type: FETCH_PRODUCTS,
@@ -17,11 +19,11 @@ export const FetchProducts = (dispatch) => {
             fetchData()
         }
             
-        else if(localStorage.getItem('products')){
+        else if(products.length !== 0){
             dispatch({
                 type: FETCH_PRODUCTS,
-                payload: JSON.parse(localStorage.getItem('products'))
+                payload: products
             })
         }
-    },[dispatch])
+    })
 }
