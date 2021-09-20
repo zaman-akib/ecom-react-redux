@@ -5,13 +5,12 @@ import CartItem from './CartItem'
 import { Link } from 'react-router-dom'
 import { showHideCart, clearCart } from '../../actions/cartActions'
 import { useDispatch, useSelector } from 'react-redux'
+import { calcTotalPrice } from '../../helper/helperMethods'
 
 export default function Cart() {
   const dispatch = useDispatch()
   const cartItems = useSelector(state => state.cart.cartItems)
   const showCart = useSelector(state => state.cart.showCart)
-  
-  let total = 0
 
   function handleShowHideCart() {
     dispatch(showHideCart())
@@ -64,51 +63,47 @@ export default function Cart() {
                       </div>
                     </div>
 
-                    {cartItems.length !== 0 && (
-                        <button className="flex justify-center items-center py-2 w-24 mt-5 cursor-pointer border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-400 hover:bg-red-500"
-                        onClick={handleClearCart}>
-                            Clear Cart
-                        </button>
-                    )}
-
                     {cartItems.length === 0 ? (
                         <div className="text-center m-12">No Items Added</div>
                         ) : (
                         <div>
-                            {cartItems.map((item) => {
-                              total += item.quantity * item.price
-                              return <CartItem key={item.id} item={item} />
-                            })}
+                            {cartItems.map((item) => <CartItem key={item.id} item={item} />)}
                         </div>
                     )}
                   </div>
 
                   {cartItems.length !== 0 && (
                       <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
-                      <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>Subtotal</p>
-                        <p>${total.toFixed(2)}</p>
-                      </div>
-                      <Link to='/checkout'>
-                        <div className="mt-6">
-                          <button className="flex justify-center ml-auto px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                            Checkout
-                          </button>
+                        <div className="flex justify-between text-base font-medium text-gray-900">
+                          <p>Subtotal</p>
+                          <p>${calcTotalPrice(cartItems)}</p>
                         </div>
-                      </Link>
-                      <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
-                        <p>
-                          or{' '}
-                          <button
-                            type="button"
-                            className="text-indigo-600 font-medium hover:text-indigo-500"
-                            onClick={handleShowHideCart}
-                          >
-                            Continue Shopping<span aria-hidden="true"> &rarr;</span>
+
+                        <div className="flex flex-row justify-between">
+                          <button className="flex justify-center items-center py-3 px-6 mt-6 cursor-pointer border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-400 hover:bg-red-500"
+                          onClick={handleClearCart}>
+                              Clear Cart
                           </button>
-                        </p>
+                          <Link to='/checkout'>
+                            <button className="flex justify-center ml-auto mt-6 px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                              Checkout
+                            </button>
+                          </Link>
+                        </div>
+                        
+                        <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
+                          <p>
+                            or{' '}
+                            <button
+                              type="button"
+                              className="text-indigo-600 font-medium hover:text-indigo-500"
+                              onClick={handleShowHideCart}
+                            >
+                              Continue Shopping<span aria-hidden="true"> &rarr;</span>
+                            </button>
+                          </p>
+                        </div>
                       </div>
-                    </div>
                   )}
 
                 </div>

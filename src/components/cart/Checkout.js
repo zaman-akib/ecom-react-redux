@@ -2,11 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { showHideCart, clearCart } from '../../actions/cartActions'
 import { useSelector, useDispatch } from 'react-redux'
+import { calcPrice } from '../../helper/helperMethods'
+import { calcTotalPrice } from '../../helper/helperMethods'
 
 function Checkout() {
     const cartItems = useSelector(state => state.cart.cartItems)
     const dispatch = useDispatch()
-    let total = 0
 
     function handleContinue() {
         dispatch(clearCart())
@@ -21,7 +22,6 @@ function Checkout() {
             {
                 cartItems.map(item => (
                     <div key={item.id} className="mt-5 flex flex-start w-11/12 sm:w-9/12 lg:w-1/2 md:w-9/12 p-2 border-2">
-                        <div className="hidden">{total += item.quantity * item.price}</div>
                         <div className="flow-root">
                         <ul className="-my-6 divide-y divide-gray-200">
                             <li key={item.id} className="py-6 flex">
@@ -37,7 +37,7 @@ function Checkout() {
                                     <p>{item.title}</p>
                                     <p>Unit Price: ${(item.price).toFixed(2)}</p>
                                     <p>Quantity: {item.quantity}</p>
-                                    <p>Price: ${(item.quantity * item.price).toFixed(2)}</p>
+                                    <p>Price: ${calcPrice(item.quantity, item.price)}</p>
                                 </div>
                             </li>
                         </ul>
@@ -48,7 +48,7 @@ function Checkout() {
 
             <div className="flex mt-5 flex-row text-xl font-medium text-gray-900">
                 <p className="px-5">Total: </p>
-                <p>${total.toFixed(2)}</p>
+                <p>${calcTotalPrice(cartItems)}</p>
             </div>
             <div className="text-orange-600 text-center text-4xl m-6">Thank You ! Your order has been placed</div>
             <div className="text-indigo-600 text-2xl text-center mb-10 font-medium hover:text-indigo-500" onClick={handleContinue}>
