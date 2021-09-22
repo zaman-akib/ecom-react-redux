@@ -3,7 +3,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import EcomApp from '../ecom-app/EcomApp'
 import RouteHandler from '../../router/RouteHandler'
 import { Provider } from 'react-redux'
-import { store, persistor } from '../../store/store'
+import { store, persistor } from '../../redux/store/store'
 
 function RootComponent() {
     return (

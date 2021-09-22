@@ -1,7 +1,7 @@
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { FiMinusSquare, FiPlusSquare } from 'react-icons/fi'
 import { useDispatch } from "react-redux";
-import { deleteFromCart, updateQuantity } from '../../actions/cartActions'
+import { deleteFromCart, updateQuantity } from '../../redux/actions/cartActions'
 import { calcPrice } from '../../helper/helperMethods'
 
 const CartItem = ({ item }) => {
