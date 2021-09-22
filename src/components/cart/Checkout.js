@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { showHideCart, clearCart } from '../../actions/cartActions'
+import { showHideCart, clearCart } from '../../redux/actions/cartActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { calcPrice } from '../../helper/helperMethods'
 import { calcTotalPrice } from '../../helper/helperMethods'
