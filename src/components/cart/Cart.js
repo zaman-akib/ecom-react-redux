@@ -3,26 +3,17 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import CartItem from './CartItem'
 import { Link } from 'react-router-dom'
-import { showHideCart, clearCart } from '../../actions/cartActions'
+import { showHideCart, clearCart } from '../../redux/actions/cartActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { calcTotalPrice } from '../../helper/helperMethods'
 
 export default function Cart() {
   const dispatch = useDispatch()
-  const cartItems = useSelector(state => state.cart.cartItems)
-  const showCart = useSelector(state => state.cart.showCart)
-
-  function handleShowHideCart() {
-    dispatch(showHideCart())
-  }
-
-  function handleClearCart() {
-    dispatch(clearCart())
-  }
+  const {cartItems, showCart}= useSelector(state => state.cart)
 
   return (
     <Transition.Root show={showCart} as={Fragment} className="sticky top-0 z-50">
-      <Dialog as="div" className="absolute inset-0 overflow-hidden" onClose={handleShowHideCart}>
+      <Dialog as="div" className="absolute inset-0 overflow-hidden" onClose={e => dispatch(showHideCart())}>
         <div className="absolute inset-0 overflow-hidden">
           <Transition.Child
             as={Fragment}
@@ -55,7 +46,7 @@ export default function Cart() {
                         <button
                           type="button"
                           className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                          onClick={handleShowHideCart}
+                          onClick={e => dispatch(showHideCart())}
                         >
                           <span className="sr-only">Close panel</span>
                           <XIcon className="h-6 w-6" aria-hidden="true" />
@@ -81,7 +72,7 @@ export default function Cart() {
 
                         <div className="flex flex-row justify-between">
                           <button className="flex justify-center items-center py-3 px-6 mt-6 cursor-pointer border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-400 hover:bg-red-500"
-                          onClick={handleClearCart}>
+                          onClick={e => dispatch(clearCart())}>
                               Clear Cart
                           </button>
                           <Link to='/checkout'>
@@ -97,7 +88,7 @@ export default function Cart() {
                             <button
                               type="button"
                               className="text-indigo-600 font-medium hover:text-indigo-500"
-                              onClick={handleShowHideCart}
+                              onClick={e => dispatch(showHideCart())}
                             >
                               Continue Shopping<span aria-hidden="true"> &rarr;</span>
                             </button>

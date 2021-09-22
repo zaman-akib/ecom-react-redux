@@ -1,9 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../../actions/cartActions'
-import { FetchProducts } from '../../actions/productActions'
+import { FetchProducts } from '../../redux/actions/productActions'
 import { FiMinusSquare, FiPlusSquare } from 'react-icons/fi'
-import { deleteFromCart, updateQuantity } from '../../actions/cartActions'
+import { addToCart, deleteFromCart, updateQuantity } from '../../redux/actions/cartActions'
 
 
 function ProductCard() {
@@ -19,9 +18,6 @@ function ProductCard() {
             product.quantity = 1
             dispatch(addToCart(product))
         }
-        else {
-            alert('Already added in cart')
-        }
     }
 
     function isExistInCart(id) {
@@ -33,7 +29,7 @@ function ProductCard() {
         return item.quantity
     }
 
-    function handleDelete(id) {
+    function handleCartQuantity(id) {
         dispatch(deleteFromCart(id))
     }
 
@@ -55,7 +51,7 @@ function ProductCard() {
                                     <div className="flex-1 flex justify-between text-sm border-2 border-t-0 border-red-400 bg-teal-500 p-2 w-64 mt-0 mx-8 rounded-b-lg">
                                         <div className="flex flex-row items-center justify-around bg-orange-300 w-full rounded-lg mx-8 p-2 font-semibold">
                                             <FiMinusSquare className="cursor-pointer" size={25} onClick={() => dispatch(updateQuantity(product.id, -1))}/>
-                                                {getQuantity(product.id) === 0 ? handleDelete(product.id) : (
+                                                {getQuantity(product.id) < 1 ? handleCartQuantity(product.id) : (
                                                     <div className="px-5 text-lg font-bold">{getQuantity(product.id)}</div>
                                                 )}
                                             <FiPlusSquare size={25} className="cursor-pointer" onClick={() => dispatch(updateQuantity(product.id, 1))}/>

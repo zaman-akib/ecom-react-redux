@@ -1,6 +1,6 @@
 import React from 'react'
 import { HiOutlineShoppingCart } from 'react-icons/hi'
-import { showHideCart } from '../../actions/cartActions'
+import { showHideCart } from '../../redux/actions/cartActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 
@@ -11,10 +11,6 @@ function NavBar() {
     let totalItems = 0
 
     cartItems.map(item => (totalItems += item.quantity))
-
-    function handleShowHideCart() {
-        dispatch(showHideCart())
-    }
 
     return (
         <nav className="flex sticky top-0 z-50 justify-between bg-teal-500">
@@ -30,7 +26,7 @@ function NavBar() {
                     </div> */}
                 </div>
                 <button className="flex flex-row pb-2 pb px-4 mr-2 cursor-pointer" 
-                onClick={handleShowHideCart}>
+                onClick={e => dispatch(showHideCart())}>
                     <HiOutlineShoppingCart size={30}/>
                     {
                         cartItems.length > 0 && <div className="">
