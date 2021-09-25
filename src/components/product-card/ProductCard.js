@@ -41,7 +41,9 @@ function ProductCard() {
                         products.map(product => (
                             <div key={product.id} className="mb-20 mt-5">
                                 <div className="flex flex-col border-2 border-b-0 bg-teal-500 border-red-400 rounded-t-lg w-64 h-full m-5 mb-0 mx-8 overflow-hidden">
-                                    <img className="self-center w-56 h-56 mb-1 mt-3 rounded-lg transform hover:scale-105" src={product.image} alt="" />
+                                    <img className="self-center w-56 h-56 mb-1 mt-3 rounded-lg transform hover:scale-105" 
+                                    src={localStorage.getItem(product.id)? `data:image/jpg;base64,${localStorage.getItem(product.id)}`:product.image} 
+                                    alt={product.description} />
                                     <div className="flex flex-col text-center p-3 pb-0 transform">
                                         <div className="font-medium mb-1">{product.title}</div>
                                         <div className="px-2 mx-auto">Price: $ {product.price}</div>
