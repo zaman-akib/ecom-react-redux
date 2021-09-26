@@ -1,17 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { FetchProducts } from '../../redux/actions/productActions'
+import { useFetch } from '../../redux/actions/productActions'
 import { FiMinusSquare, FiPlusSquare } from 'react-icons/fi'
 import { addToCart, deleteFromCart, updateQuantity } from '../../redux/actions/cartActions'
 
 
 function ProductCard() {
     const dispatch = useDispatch()
-
-    dispatch(FetchProducts)
+    const url = 'https://fakestoreapi.com/products'
 
     const products = useSelector(state => state.fetchedProducts.products)
     const cartItems = useSelector(state => state.cart.cartItems)
+
+    dispatch(useFetch(url))
 
     function handleAdd(product) {
         if(!isExistInCart(product.id)) {
