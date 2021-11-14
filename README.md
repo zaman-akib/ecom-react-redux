@@ -20,5 +20,6 @@
 4. Redux thunk
 
 ## Run this app
-Step 1: <npm install>
-Step 2: <npm start>
+Open terminal in this project directory and write commands as below -  
+Step 1: npm install
+Step 2: npm start
