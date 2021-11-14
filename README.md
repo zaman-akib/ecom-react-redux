@@ -21,5 +21,5 @@
 
 ## Run this app
 Open terminal in this project directory and write commands as below -  
-Step 1: npm install
+Step 1: npm install <br>
 Step 2: npm start
